@@ -13,7 +13,7 @@ class VGGBase(nn.Module):
     VGG base convolutions to produce lower-level feature maps.
     """
 
-    def __init__(self):
+    def __init__(self, use_pretrained_base=True):
         super(VGGBase, self).__init__()
 
         # Standard convolutional layers in VGG16
@@ -46,7 +46,8 @@ class VGGBase(nn.Module):
         self.conv7 = nn.Conv2d(1024, 1024, kernel_size=1)
 
         # Load pretrained layers
-        self.load_pretrained_layers()
+        if use_pretrained_base:
+            self.load_pretrained_layers()
 
     def forward(self, image):
         """
