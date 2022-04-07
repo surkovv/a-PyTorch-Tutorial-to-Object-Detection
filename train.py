@@ -33,7 +33,7 @@ grad_clip = None  # clip if gradients are exploding, which may happen at larger 
 cudnn.benchmark = True
 
 clear_output = None
-def big_train(train_dataset, train_dataloader, co):
+def big_train(train_dataset, train_loader, co):
     """
     Training.
     """
@@ -159,6 +159,3 @@ def train(train_loader, model, criterion, optimizer, epoch, loss_array):
                                                                   data_time=data_time, loss=losses))
     del predicted_locs, predicted_scores, images, boxes, labels  # free some memory since their histories may be stored
 
-
-if __name__ == '__main__':
-    main()
