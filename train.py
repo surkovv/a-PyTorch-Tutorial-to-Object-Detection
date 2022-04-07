@@ -86,7 +86,8 @@ def big_train(train_dataset, train_loader, co):
               model=model,
               criterion=criterion,
               optimizer=optimizer,
-              epoch=epoch)
+              epoch=epoch,
+              loss_array=loss_array)
         
         clear_output()
         plt.figure(figsize=(8, 8))
