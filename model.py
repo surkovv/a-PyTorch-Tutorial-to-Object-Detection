@@ -326,12 +326,12 @@ class SSD300(nn.Module):
     The SSD300 network - encapsulates the base VGG network, auxiliary, and prediction convolutions.
     """
 
-    def __init__(self, n_classes):
+    def __init__(self, n_classes, use_pretrained_base=True):
         super(SSD300, self).__init__()
 
         self.n_classes = n_classes
 
-        self.base = VGGBase()
+        self.base = VGGBase(use_pretrained_base=True)
         self.aux_convs = AuxiliaryConvolutions()
         self.pred_convs = PredictionConvolutions(n_classes)
 
