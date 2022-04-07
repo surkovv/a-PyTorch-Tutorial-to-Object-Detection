@@ -151,7 +151,7 @@ def train(train_loader, model, criterion, optimizer, epoch, loss_array):
 
         # Print status
         if i % print_freq == 0:
-            loss_array.append(loss.val)
+            loss_array.append(losses.val)
             print('Epoch: [{0}][{1}/{2}]\t'
                   'Batch Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data Time {data_time.val:.3f} ({data_time.avg:.3f})\t'
