@@ -5,6 +5,8 @@ import torch.utils.data
 from model import SSD300, MultiBoxLoss
 from datasets import PascalVOCDataset
 from utils import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Data parameters
 data_folder = './'  # folder with data files
@@ -30,12 +32,13 @@ grad_clip = None  # clip if gradients are exploding, which may happen at larger 
 
 cudnn.benchmark = True
 
-
-def big_train(train_dataset, train_dataloader):
+clear_output = None
+def big_train(train_dataset, train_dataloader, co):
     """
     Training.
     """
-    global start_epoch, label_map, epoch, checkpoint, decay_lr_at
+    global start_epoch, label_map, epoch, checkpoint, decay_lr_at, clear_output
+    clear_output = co
 
     # Initialize model or load checkpoint
     if checkpoint is None:
@@ -69,7 +72,8 @@ def big_train(train_dataset, train_dataloader):
     # The paper trains for 120,000 iterations with a batch size of 32, decays after 80,000 and 100,000 iterations
     epochs = iterations // (len(train_dataset) // 32)
     decay_lr_at = [it // (len(train_dataset) // 32) for it in decay_lr_at]
-
+    
+    loss_array = []
     # Epochs
     for epoch in range(start_epoch, epochs):
 
@@ -83,12 +87,19 @@ def big_train(train_dataset, train_dataloader):
               criterion=criterion,
               optimizer=optimizer,
               epoch=epoch)
+        
+        clear_output()
+        plt.figure(figsize=(8, 8))
+        plt.plot(np.arange(len(loss_array)) + 1, loss_array)
+        plt.title('Лосс')
+        plt.ylabel('Лосс')
+        plt.show()
 
         # Save checkpoint
         save_checkpoint(epoch, model, optimizer)
 
 
-def train(train_loader, model, criterion, optimizer, epoch):
+def train(train_loader, model, criterion, optimizer, epoch, loss_array):
     """
     One epoch's training.
 
@@ -139,6 +150,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
         # Print status
         if i % print_freq == 0:
+            loss_array.append(loss.val)
             print('Epoch: [{0}][{1}/{2}]\t'
                   'Batch Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data Time {data_time.val:.3f} ({data_time.avg:.3f})\t'
