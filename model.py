@@ -612,12 +612,17 @@ class SSD300(nn.Module):
         # (PyTorch autobroadcasts singleton dimensions during arithmetic)
 
         # Run auxiliary convolutions (higher level feature map generators)
-        conv8_2_feats, conv9_2_feats, conv10_2_feats, conv11_2_feats = \
-            self.aux_convs(conv7_feats)  # (N, 512, 10, 10),  (N, 256, 5, 5), (N, 256, 3, 3), (N, 256, 1, 1)
-
+        lst = self.aux_convs(conv7_feats)
+        if let(lst) == 4:
+            conv8_2_feats, conv9_2_feats, conv10_2_feats, conv11_2_feats = \
+              lst# (N, 512, 10, 10),  (N, 256, 5, 5), (N, 256, 3, 3), (N, 256, 1, 1)
+            
+        else:
+            conv8_2_feats, conv9_2_feats, conv10_2_feats, conv11_2_feats, conv12_2_feats, conv13_2_feats = \
+              lst
+            
         # Run prediction convolutions (predict offsets w.r.t prior-boxes and classes in each resulting localization box)
-        locs, classes_scores = self.pred_convs(conv4_3_feats, conv7_feats, conv8_2_feats, conv9_2_feats, conv10_2_feats,
-                                               conv11_2_feats)  # (N, 8732, 4), (N, 8732, n_classes)
+        locs, classes_scores = self.pred_convs(*lst)  # (N, 8732, 4), (N, 8732, n_classes)
 
         return locs, classes_scores
 
