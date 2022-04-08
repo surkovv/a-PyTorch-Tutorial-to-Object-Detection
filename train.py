@@ -97,7 +97,7 @@ def big_train(train_dataset, train_loader, co, model):
         plt.show()
 
         # Save checkpoint
-        save_checkpoint(epoch, model, optimizer)
+#         save_checkpoint(epoch, model, optimizer)
 
 
 def train(train_loader, model, criterion, optimizer, epoch, loss_array):
