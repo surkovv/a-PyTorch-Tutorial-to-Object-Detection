@@ -33,7 +33,7 @@ grad_clip = None  # clip if gradients are exploding, which may happen at larger 
 cudnn.benchmark = True
 
 clear_output = None
-def big_train(train_dataset, train_loader, co, pretrained=True):
+def big_train(train_dataset, train_loader, co, model):
     """
     Training.
     """
@@ -43,7 +43,7 @@ def big_train(train_dataset, train_loader, co, pretrained=True):
     # Initialize model or load checkpoint
     if checkpoint is None:
         start_epoch = 0
-        model = SSD300(n_classes=n_classes, use_pretrained_base=pretrained)
+#         model = SSD300(n_classes=n_classes, use_pretrained_base=pretrained)
         # Initialize the optimizer, with twice the default learning rate for biases, as in the original Caffe repo
         biases = list()
         not_biases = list()
