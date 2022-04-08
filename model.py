@@ -613,7 +613,7 @@ class SSD300(nn.Module):
 
         # Run auxiliary convolutions (higher level feature map generators)
         lst = self.aux_convs(conv7_feats)
-        if let(lst) == 4:
+        if len(lst) == 4:
             conv8_2_feats, conv9_2_feats, conv10_2_feats, conv11_2_feats = \
               lst# (N, 512, 10, 10),  (N, 256, 5, 5), (N, 256, 3, 3), (N, 256, 1, 1)
             
