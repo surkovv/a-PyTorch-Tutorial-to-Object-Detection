@@ -622,7 +622,7 @@ class SSD300(nn.Module):
               lst
             
         # Run prediction convolutions (predict offsets w.r.t prior-boxes and classes in each resulting localization box)
-        locs, classes_scores = self.pred_convs(*lst)  # (N, 8732, 4), (N, 8732, n_classes)
+        locs, classes_scores = self.pred_convs(conv4_3_feats, conv7_feats, *lst)  # (N, 8732, 4), (N, 8732, n_classes)
 
         return locs, classes_scores
 
