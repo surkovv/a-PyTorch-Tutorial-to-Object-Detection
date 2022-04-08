@@ -442,7 +442,9 @@ class NewPredictionConvolutions(nn.Module):
                    'conv8_2': 6,
                    'conv9_2': 6,
                    'conv10_2': 4,
-                   'conv11_2': 4}
+                   'conv11_2': 4,
+                   'conv12_2': 4,
+                   'conv13_2': 4}
         # 4 prior-boxes implies we use 4 different aspect ratios, etc.
 
         # Localization prediction convolutions (predict offsets w.r.t prior-boxes)
@@ -630,21 +632,27 @@ class SSD300(nn.Module):
                      'conv8_2': 10,
                      'conv9_2': 5,
                      'conv10_2': 3,
-                     'conv11_2': 1}
+                     'conv11_2': 1,
+                     'conv12_2': 3,
+                     'conv13_2': 5}
 
         obj_scales = {'conv4_3': 0.1,
                       'conv7': 0.2,
                       'conv8_2': 0.375,
                       'conv9_2': 0.55,
                       'conv10_2': 0.725,
-                      'conv11_2': 0.9}
+                      'conv11_2': 0.9,
+                      'conv12_2': 0.725,
+                      'conv13_2': 0.55,}
 
         aspect_ratios = {'conv4_3': [1., 2., 0.5],
                          'conv7': [1., 2., 3., 0.5, .333],
                          'conv8_2': [1., 2., 3., 0.5, .333],
                          'conv9_2': [1., 2., 3., 0.5, .333],
                          'conv10_2': [1., 2., 0.5],
-                         'conv11_2': [1., 2., 0.5]}
+                         'conv11_2': [1., 2., 0.5],
+                         'conv12_2': [1., 2., 0.5],
+                         'conv13_2': [1., 2., 0.5]}
 
         fmaps = list(fmap_dims.keys())
 
