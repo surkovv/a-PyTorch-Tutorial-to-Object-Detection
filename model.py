@@ -16,19 +16,18 @@ class ResNet50Base(nn.Module):
         self.dict = dict()
 
         self.hooks = [
-            self.backbone.layer2[3].relu.register_forward_hook(self.forward_hook('feature_map1')),
-            self.backbone.layer3[5].relu.register_forward_hook(self.forward_hook('feature_map2')),
-            
+            self.backbone.layer2[3].relu.register_forward_hook(self.forward_hook('a1')),
+            self.backbone.layer3[5].relu.register_forward_hook(self.forward_hook('a2')),   
         ]
         
-    def forward_hook(self, layer_name):
+    def forward_hook(self, name):
         def hook(module, input, output):
-            self.dict[layer_name] = output
+            self.dict[name] = output
         return hook
 
     def forward(self, x):
-        self.backbone_model(x)
-        return self.dict['feature_map1'], self.dict['feature_map2']
+        self.backbone(x)
+        return self.dict['a1'], self.dict['a2']
 
 
 
