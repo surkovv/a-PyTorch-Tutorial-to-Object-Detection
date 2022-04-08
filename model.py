@@ -567,8 +567,8 @@ class NewPredictionConvolutions(nn.Module):
 
         # A total of 8732 boxes
         # Concatenate in this specific order (i.e. must match the order of the prior-boxes)
-        locs = torch.cat([l_conv4_3, l_conv7, l_conv8_2, l_conv9_2, l_conv10_2, l_conv11_2], dim=1)  # (N, 8732, 4)
-        classes_scores = torch.cat([c_conv4_3, c_conv7, c_conv8_2, c_conv9_2, c_conv10_2, c_conv11_2],
+        locs = torch.cat([l_conv4_3, l_conv7, l_conv8_2, l_conv9_2, l_conv10_2, l_conv11_2, l_conv12_2, l_conv13_2], dim=1)  # (N, 8732, 4)
+        classes_scores = torch.cat([c_conv4_3, c_conv7, c_conv8_2, c_conv9_2, c_conv10_2, c_conv11_2, c_conv12_2, c_conv13_2],
                                    dim=1)  # (N, 8732, n_classes)
 
         return locs, classes_scores
