@@ -13,22 +13,22 @@ class ResNet50Base(nn.Module):
 
         self.backbone = torchvision.models.resnet50(pretrained=True)
 
-        self.selected_out = OrderedDict()
+        self.dict = dict()
 
         self.hooks = [
-            self.backbone.layer2[3].relu.register_forward_hook(self.forward_hook('feature_map1'))),
-            self.backbone.layer3[5].relu.register_forward_hook(self.forward_hook('feature_map2'))),
+            self.backbone.layer2[3].relu.register_forward_hook(self.forward_hook('feature_map1')),
+            self.backbone.layer3[5].relu.register_forward_hook(self.forward_hook('feature_map2')),
             
         ]
         
     def forward_hook(self, layer_name):
         def hook(module, input, output):
-            self.selected_out[layer_name] = output
+            self.dict[layer_name] = output
         return hook
 
     def forward(self, x):
         self.backbone_model(x)
-        return self.selected_out['feature_map1'], self.selected_out['feature_map2']
+        return self.dict['feature_map1'], self.dict['feature_map2']
 
 
 
